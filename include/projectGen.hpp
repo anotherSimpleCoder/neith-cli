@@ -9,7 +9,7 @@
 #include "utils.hpp"
 
 namespace ProjectGen {
-    void generate();
+    void generate(std::string name);
 }
 
 #endif

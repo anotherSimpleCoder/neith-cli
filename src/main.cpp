@@ -9,7 +9,12 @@
 
 void route(Args::Args args) {
     if(args.argv[1] == "new") {
-        ProjectGen::generate();
+        ProjectGen::generate(args.argv[2]);
+        return;
+    }
+
+    if(args.argv[1] == "serve") {
+        Utils::run("cmd /c deno task dev");
         return;
     }
 

@@ -21,13 +21,18 @@ void writeRoutes(std::string projName) {
     Utils::writeFile(projName + "/routes.ts", codeStream.str());
 }
 
-void ProjectGen::generate() {
-    std::string name;
-    std::cout << "Project name: ";
-    std::cin >> name;
-    std::cout << "\n";
-    std::cout << name << std::endl;
+void writeDenoJSON(std::string projName) {
+    std::ostringstream codeStream;
+    codeStream << "{" << std::endl;
+    codeStream << "\t\"tasks\": {" << std::endl;
+    codeStream << "\t\t\"dev\": \"deno run --watch main.ts\"" << std::endl;
+    codeStream << "\t}" << std::endl;
+    codeStream << "}" << std::endl;
 
+    Utils::writeFile(projName + "/deno.json", codeStream.str());
+}
+
+void ProjectGen::generate(std::string name) {
     if(!std::filesystem::create_directory(name)) {
         std::cout << "FileError: Couldn't create directory " << name << std::endl;
         return;
@@ -37,5 +42,6 @@ void ProjectGen::generate() {
     // Utils::run("cmd /c cd " + name + " && git clone https://github.com/anotherSimpleCoder/neith");
     writeRoutes(name);
     writeMainTS(name);
+    writeDenoJSON(name);
     Utils::run("cmd /c cd " + name + " && deno cache .");
 }
