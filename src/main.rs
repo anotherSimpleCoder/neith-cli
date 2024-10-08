@@ -6,6 +6,7 @@ mod creator;
 use std::env;
 
 fn main() {
+
     let args: Vec<String> = env::args().collect();
     if args.len() < 2 {
         utils::title_card();
@@ -14,6 +15,7 @@ fn main() {
     }
 
     route(&args[1..args.len()]);
+
     return;
 }
 
@@ -23,7 +25,7 @@ fn route(args: &[String]) {
     }
 
     if args[0] == "serve" {
-        utils::run("cmd /c deno task dev");
+        utils::run("deno", &["task", "dev"]);
     }
 
     if args[0] == "service" {

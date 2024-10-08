@@ -1,19 +1,17 @@
 use crate::utils;
 use std::fmt::Write;
 use std::fs::create_dir;
-use std::process::{Command, Stdio};
 
 pub fn generate(proj_name: &str) {
     create_dir(proj_name)
         .expect(format!("FileError: Could not create the directory {}", proj_name).as_str());
 
 
-
-    utils::run(format!("cmd /c cd {} && deno init", proj_name).as_str());
+    utils::run("cd", &[proj_name, "&&", "deno", "init"]);
     write_routes(proj_name);
     write_main_ts(proj_name);
     write_deno_json(proj_name);
-    utils::run(format!("cmd /c cd {} && deno cache", proj_name).as_str());
+    utils::run("cd", &[proj_name, "&&", "deno", "cache", "."]);
 }
 
 fn write_routes(proj_name: &str) {

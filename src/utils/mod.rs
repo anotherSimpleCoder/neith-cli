@@ -1,8 +1,8 @@
 mod banner;
 
-use std::process::Command;
 use std::fs::File;
 use std::io::Write;
+use subprocess::Exec;
 
 pub fn title_card() {
     let byte_data = Vec::from(banner::BANNER);
@@ -12,8 +12,11 @@ pub fn title_card() {
     println!("{}", title);
 }
 
-pub fn run(command: &str) {
-    todo!()
+pub fn run(command: &str, args: &[&str]) {
+    Exec::shell(command)
+        .args(args)
+        .join()
+        .expect("FatalError: Failed to run command!");
 }
 
 pub fn write_file(filename: &str, content: &str) {
